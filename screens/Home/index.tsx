@@ -1,12 +1,24 @@
+import { StyleSheet } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
-import { Text } from '@ui-kitten/components';
+import { Button, Layout, Text } from '@ui-kitten/components';
 
 const HomeScreen = () => {
   return (
     <DefaultLayout>
-      <Text>Home</Text>
+      <Layout style={styles.container}>
+        <Text>Ваша геолокация: </Text>
+        <Button size="">Получить смены</Button>
+      </Layout>
     </DefaultLayout>
   );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    gap: 16,
+  },
+});
