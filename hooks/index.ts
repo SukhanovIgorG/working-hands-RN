@@ -1,2 +1,2 @@
 export { useLocation } from './use-location';
-export { useGetWorkers } from './use-get-handworks-by-location';
+export { useGetShiftsByLocation } from './use-get-shifts-by-location';

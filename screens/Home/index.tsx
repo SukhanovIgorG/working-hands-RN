@@ -1,21 +1,21 @@
 import { FlatList, StyleSheet } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
 import { Button, ButtonGroup, Layout, Text } from '@ui-kitten/components';
-import { locationStore, handWorkerStore } from '../../stores';
-import { useLocation, useGetWorkers } from '../../hooks';
+import { locationStore, shiftStore } from '../../stores';
+import { useLocation, useGetShiftsByLocation } from '../../hooks';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
 
 const HomeScreen = () => {
-  const { handleGetWorkers, loading } = useGetWorkers();
+  const { handleGetShifts, loading } = useGetShiftsByLocation();
   const { handleGetCurrentLocation } = useLocation();
 
   const location = `${locationStore.latitude} ${locationStore.longitude}`;
-  const workers = handWorkerStore.list;
+  const workers = shiftStore.list;
 
   const handleClickGetWorkers = () => {
     if (locationStore.latitude && locationStore.longitude) {
-      handleGetWorkers(locationStore.latitude, locationStore.longitude);
+      handleGetShifts(locationStore.latitude, locationStore.longitude);
     }
   };
 

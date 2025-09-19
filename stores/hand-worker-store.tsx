@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { Shift } from '../types';
 
-class HandWorkerStore {
+class ShiftStore {
   list: Shift[] = [];
   loading: boolean = false;
 
@@ -13,9 +13,9 @@ class HandWorkerStore {
     this.loading = value;
   }
 
-  setHandWorkers(workers: Shift[]) {
+  setShifts(workers: Shift[]) {
     this.list = workers;
   }
 }
 
-export const handWorkerStore = new HandWorkerStore();
+export const shiftStore = new ShiftStore();
