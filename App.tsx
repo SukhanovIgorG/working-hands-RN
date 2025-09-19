@@ -3,9 +3,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { HomeScreen } from './screens';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
+import { useRequestLocationPermission } from './hooks';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+  useRequestLocationPermission();
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
