@@ -1,4 +1,4 @@
-export type HandWorker = {
+export type Shift = {
   logo: string;
   address: string;
   companyName: string;

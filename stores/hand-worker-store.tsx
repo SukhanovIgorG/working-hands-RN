@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx';
-import { HandWorker } from '../types';
+import { Shift } from '../types';
 
 class HandWorkerStore {
-  list: HandWorker[] = [];
+  list: Shift[] = [];
   loading: boolean = false;
 
   constructor() {
@@ -13,7 +13,7 @@ class HandWorkerStore {
     this.loading = value;
   }
 
-  setHandWorkers(workers: HandWorker[]) {
+  setHandWorkers(workers: Shift[]) {
     this.list = workers;
   }
 }

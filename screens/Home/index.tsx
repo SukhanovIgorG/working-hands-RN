@@ -3,6 +3,8 @@ import { DefaultLayout } from '../../layouts/default';
 import { Button, ButtonGroup, Layout, Text } from '@ui-kitten/components';
 import { locationStore, handWorkerStore } from '../../stores';
 import { useLocation, useGetWorkers } from '../../hooks';
+import { observer } from 'mobx-react-lite';
+import { ShiftCard } from '../../components';
 
 const HomeScreen = () => {
   const { handleGetWorkers, loading } = useGetWorkers();
@@ -31,18 +33,14 @@ const HomeScreen = () => {
         </ButtonGroup>
         <FlatList
           data={workers}
-          renderItem={({ item }) => (
-            <Text id={Math.random().toString()} style={styles.text}>
-              {item.address}
-            </Text>
-          )}
+          renderItem={({ item }) => <ShiftCard shift={item} />}
         />
       </Layout>
     </DefaultLayout>
   );
 };
 
-export default HomeScreen;
+export default observer(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

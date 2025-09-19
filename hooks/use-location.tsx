@@ -1,31 +1,13 @@
 import { useEffect } from 'react';
-import { PermissionsAndroid, Platform, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { locationStore } from '../stores';
-
-async function requestLocationPermission() {
-  if (Platform.OS === 'android') {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Доступ к геолокации',
-        message: 'Приложению нужен доступ к вашей геопозиции',
-        buttonNeutral: 'Спросить позже',
-        buttonNegative: 'Отмена',
-        buttonPositive: 'OK',
-      },
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
-  }
-  return true;
-}
+import { requestLocationPermission } from '../utils/location';
 
 export const useLocation = () => {
   const handleGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       position => {
-        console.log('Широта:', position.coords.latitude);
-        console.log('Долгота:', position.coords.longitude);
         locationStore.setLocation(
           position.coords.latitude,
           position.coords.longitude,
