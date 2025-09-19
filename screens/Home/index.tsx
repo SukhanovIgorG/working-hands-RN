@@ -1,5 +1,5 @@
-import { Text } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
+import { Text } from '@ui-kitten/components';
 
 const HomeScreen = () => {
   return (

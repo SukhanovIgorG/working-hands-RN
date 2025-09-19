@@ -1,8 +1,5 @@
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Layout } from '@ui-kitten/components';
 export interface DefaultLayoutProps {
   children: React.ReactNode;
 }
@@ -11,7 +8,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView
+    <Layout
       style={{
         paddingTop: safeAreaInsets.top,
         paddingBottom: safeAreaInsets.bottom,
@@ -20,6 +17,6 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       }}
     >
       {children}
-    </SafeAreaView>
+    </Layout>
   );
 };
