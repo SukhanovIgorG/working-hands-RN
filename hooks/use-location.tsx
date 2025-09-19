@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { PermissionsAndroid, Platform, Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import { locationStore } from '../stores';
 
 async function requestLocationPermission() {
   if (Platform.OS === 'android') {
@@ -19,7 +20,24 @@ async function requestLocationPermission() {
   return true;
 }
 
-export const useRequestLocationPermission = () => {
+export const useLocation = () => {
+  const handleGetCurrentLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log('Широта:', position.coords.latitude);
+        console.log('Долгота:', position.coords.longitude);
+        locationStore.setLocation(
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+      },
+      error => {
+        console.log('Ошибка:', error.code, error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+    );
+  };
+
   useEffect(() => {
     (async () => {
       const hasPermission = await requestLocationPermission();
@@ -27,19 +45,11 @@ export const useRequestLocationPermission = () => {
         Alert.alert('Нет доступа', 'Вы запретили доступ к геолокации');
         return;
       }
-
-      Geolocation.getCurrentPosition(
-        position => {
-          console.log('Широта:', position.coords.latitude);
-          console.log('Долгота:', position.coords.longitude);
-        },
-        error => {
-          console.log('Ошибка:', error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
+      handleGetCurrentLocation();
     })();
   }, []);
 
-  return null;
+  return {
+    handleGetCurrentLocation,
+  };
 };
