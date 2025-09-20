@@ -10,7 +10,9 @@ const RootStack = createNativeStackNavigator<RootStackParamList>({
   screens: {
     [AppRoutes.Home]: {
       screen: HomeScreen,
-      options: { title: 'Главная' },
+      options: {
+        title: 'Список смен',
+      },
     },
     [AppRoutes.ShiftDetails]: {
       screen: ShiftDetails,

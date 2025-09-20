@@ -6,17 +6,24 @@ import Geolocation from 'react-native-geolocation-service';
 class LocationStore {
   latitude: number | null = null;
   longitude: number | null = null;
+  loading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setLocation(lat: number, lon: number) {
+  private setLoading(value: boolean) {
+    this.loading = value;
+  }
+
+  private setLocation(lat: number, lon: number) {
     this.latitude = lat;
     this.longitude = lon;
+    this.setLoading(false);
   }
 
   getCurrentLocation = () => {
+    this.setLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         locationStore.setLocation(

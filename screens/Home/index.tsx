@@ -1,16 +1,21 @@
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, View } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
 import { Button, Layout, Text } from '@ui-kitten/components';
 import { locationStore, shiftStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AppRoutes } from '../../navigation/routes';
 
 const HomeScreen = () => {
-  const { latitude, longitude, getCurrentLocation, fetchPermissions } =
-    locationStore;
+  const {
+    latitude,
+    longitude,
+    getCurrentLocation,
+    fetchPermissions,
+    loading: locationLoading,
+  } = locationStore;
   const { fetchShifts, shiftList, loading } = shiftStore;
 
   const navigation = useNavigation();
@@ -20,11 +25,13 @@ const HomeScreen = () => {
     [latitude, longitude],
   );
 
-  const handleClickGetWorkers = () => {
+  const handleClickGetWorkers = useCallback(() => {
     if (latitude && longitude) {
       fetchShifts(latitude, longitude);
+    } else {
+      Alert.alert('Не возможно получить смены', 'Проблемы с геолокацией');
     }
-  };
+  }, [fetchShifts, latitude, longitude]);
 
   const handleGetCurrentLocation = () => {
     getCurrentLocation();
@@ -35,10 +42,19 @@ const HomeScreen = () => {
     getCurrentLocation();
   }, [getCurrentLocation, fetchPermissions]);
 
+  useEffect(() => {
+    if (latitude && longitude) {
+      fetchShifts(latitude, longitude);
+    }
+  }, [latitude, longitude, fetchShifts]);
+
   return (
     <DefaultLayout>
       <Layout style={styles.container}>
-        <Text style={styles.text}>Ваша геолокация: {location && location}</Text>
+        <Text style={styles.text}>
+          Ваша геолокация:{' '}
+          {locationLoading ? 'Обновление...' : location && location}
+        </Text>
         <FlatList
           data={shiftList}
           renderItem={({ item }) => (
