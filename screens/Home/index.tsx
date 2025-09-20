@@ -4,7 +4,7 @@ import { Button, Layout, Text } from '@ui-kitten/components';
 import { locationStore, shiftStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AppRoutes } from '../../navigation/routes';
 
@@ -25,14 +25,13 @@ const HomeScreen = () => {
     [latitude, longitude],
   );
 
-  const handleClickGetWorkers = useCallback(() => {
+  const handleClickGetWorkers = () => {
     if (latitude && longitude) {
       fetchShifts(latitude, longitude);
     } else {
       Alert.alert('Не возможно получить смены', 'Проблемы с геолокацией');
     }
-  }, [fetchShifts, latitude, longitude]);
-
+  };
   const handleGetCurrentLocation = () => {
     getCurrentLocation();
   };
@@ -52,8 +51,7 @@ const HomeScreen = () => {
     <DefaultLayout>
       <Layout style={styles.container}>
         <Text style={styles.text}>
-          Ваша геолокация:{' '}
-          {locationLoading ? 'Обновление...' : location && location}
+          Ваша геолокация: {locationLoading ? 'Обновление...' : location}
         </Text>
         <FlatList
           data={shiftList}
