@@ -5,11 +5,14 @@ import { locationStore, shiftStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
 import { useEffect, useMemo } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const { latitude, longitude, getCurrentLocation, fetchPermissions } =
     locationStore;
   const { fetchShifts, shiftList, loading } = shiftStore;
+
+  const navigation = useNavigation();
 
   const location = useMemo(
     () => latitude && longitude && `${latitude} ${longitude}`,

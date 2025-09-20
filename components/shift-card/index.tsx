@@ -4,9 +4,10 @@ import { Shift } from '../../types';
 
 interface ShiftCardProps extends ViewProps {
   shift: Shift;
+  onPressCard?: () => void;
 }
 
-export const ShiftCard = ({ shift }: ShiftCardProps) => {
+export const ShiftCard = ({ shift, onPressCard }: ShiftCardProps) => {
   const {
     address,
     companyName,
@@ -19,6 +20,7 @@ export const ShiftCard = ({ shift }: ShiftCardProps) => {
     <>
       <Layout style={styles.topContainer} level="1">
         <Card
+          onPress={onPressCard}
           style={styles.card}
           header={<Text category="h1">{companyName}</Text>}
           footer={
