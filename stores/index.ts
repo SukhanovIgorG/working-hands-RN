@@ -1,2 +1,2 @@
-export { shiftStore } from './hand-worker-store';
+export { shiftStore } from './shifts-store';
 export { locationStore } from './location-store';
