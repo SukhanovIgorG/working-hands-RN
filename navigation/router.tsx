@@ -10,7 +10,7 @@ const RootStack = createNativeStackNavigator({
       screen: HomeScreen,
       options: { title: 'Главная' },
     },
-    Profile: {
+    ShiftDetails: {
       screen: ShiftDetails,
       options: { title: 'Детали' },
     },

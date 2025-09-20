@@ -1,4 +1,4 @@
-import { StyleSheet, View, ViewProps } from 'react-native';
+import { Image, StyleSheet, View, ViewProps } from 'react-native';
 import { Card, Layout, Text } from '@ui-kitten/components';
 import { Shift } from '../../types';
 
@@ -8,30 +8,25 @@ interface ShiftCardProps extends ViewProps {
 }
 
 export const ShiftCard = ({ shift, onPressCard }: ShiftCardProps) => {
-  const {
-    address,
-    companyName,
-    currentWorkers,
-    dateStartByCity,
-    planWorkers,
-    priceWorker,
-  } = shift;
+  const { address, companyName, dateStartByCity, priceWorker, logo } = shift;
   return (
     <>
       <Layout style={styles.topContainer} level="1">
         <Card
           onPress={onPressCard}
           style={styles.card}
-          header={<Text category="h1">{companyName}</Text>}
           footer={
             <View style={styles.card}>
               <Text category="h6">Стоимость: {priceWorker} руб.</Text>
-              <Text category="h6">
-                Требуется работников: {currentWorkers} / {planWorkers}
-              </Text>
             </View>
           }
         >
+          <View style={styles.shopNameContainer}>
+            <Text category="h1" style={{ width: 200 }}>
+              {companyName}
+            </Text>
+            <Image source={{ uri: logo }} style={styles.logo} />
+          </View>
           <Text category="h6">{dateStartByCity}</Text>
           <Text>{address}</Text>
         </Card>
@@ -49,5 +44,14 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 4,
     gap: 4,
+  },
+  shopNameContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 50,
+    height: 50,
   },
 });

@@ -6,6 +6,8 @@ import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
 import { useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from '../../navigation/types';
+import { AppRoutes } from '../../navigation/routes';
 
 const HomeScreen = () => {
   const { latitude, longitude, getCurrentLocation, fetchPermissions } =
@@ -48,7 +50,16 @@ const HomeScreen = () => {
         </ButtonGroup>
         <FlatList
           data={shiftList}
-          renderItem={({ item }) => <ShiftCard shift={item} />}
+          renderItem={({ item }) => (
+            <ShiftCard
+              shift={item}
+              onPressCard={() =>
+                navigation.navigate(AppRoutes.ShiftDetails, {
+                  id: item.id,
+                })
+              }
+            />
+          )}
         />
       </Layout>
     </DefaultLayout>
