@@ -1,6 +1,6 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
-import { Button, ButtonGroup, Layout, Text } from '@ui-kitten/components';
+import { Button, Layout, Text } from '@ui-kitten/components';
 import { locationStore, shiftStore } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
@@ -39,14 +39,6 @@ const HomeScreen = () => {
     <DefaultLayout>
       <Layout style={styles.container}>
         <Text style={styles.text}>Ваша геолокация: {location && location}</Text>
-        <ButtonGroup>
-          <Button disabled={loading} onPress={handleGetCurrentLocation}>
-            Обновить геолокацию
-          </Button>
-          <Button disabled={loading} onPress={handleClickGetWorkers}>
-            Получить смены
-          </Button>
-        </ButtonGroup>
         <FlatList
           data={shiftList}
           renderItem={({ item }) => (
@@ -60,6 +52,22 @@ const HomeScreen = () => {
             />
           )}
         />
+        <View style={styles.buttonGroup}>
+          <Button
+            style={styles.button}
+            disabled={loading}
+            onPress={handleGetCurrentLocation}
+          >
+            Обновить геолокацию
+          </Button>
+          <Button
+            disabled={loading}
+            style={styles.button}
+            onPress={handleClickGetWorkers}
+          >
+            Получить смены
+          </Button>
+        </View>
       </Layout>
     </DefaultLayout>
   );
@@ -76,5 +84,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: '#000',
+  },
+  buttonGroup: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: 16,
+    justifyContent: 'flex-start',
+  },
+  button: {
+    flex: 1,
   },
 });
