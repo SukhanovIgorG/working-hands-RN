@@ -2,27 +2,39 @@ import { FlatList, StyleSheet } from 'react-native';
 import { DefaultLayout } from '../../layouts/default';
 import { Button, ButtonGroup, Layout, Text } from '@ui-kitten/components';
 import { locationStore, shiftStore } from '../../stores';
-import { useLocation, useGetShiftsByLocation } from '../../hooks';
 import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
+import { useEffect, useMemo } from 'react';
 
 const HomeScreen = () => {
-  const { handleGetShifts, loading } = useGetShiftsByLocation();
-  const { handleGetCurrentLocation } = useLocation();
+  const { latitude, longitude, getCurrentLocation, fetchPermissions } =
+    locationStore;
+  const { fetchShifts, shiftList, loading } = shiftStore;
 
-  const location = `${locationStore.latitude} ${locationStore.longitude}`;
-  const workers = shiftStore.list;
+  const location = useMemo(
+    () => latitude && longitude && `${latitude} ${longitude}`,
+    [latitude, longitude],
+  );
 
   const handleClickGetWorkers = () => {
-    if (locationStore.latitude && locationStore.longitude) {
-      handleGetShifts(locationStore.latitude, locationStore.longitude);
+    if (latitude && longitude) {
+      fetchShifts(latitude, longitude);
     }
   };
+
+  const handleGetCurrentLocation = () => {
+    getCurrentLocation();
+  };
+
+  useEffect(() => {
+    fetchPermissions();
+    getCurrentLocation();
+  }, [getCurrentLocation, fetchPermissions]);
 
   return (
     <DefaultLayout>
       <Layout style={styles.container}>
-        <Text style={styles.text}>Ваша геолокация: {location}</Text>
+        <Text style={styles.text}>Ваша геолокация: {location && location}</Text>
         <ButtonGroup>
           <Button disabled={loading} onPress={handleGetCurrentLocation}>
             Обновить геолокацию
@@ -32,7 +44,7 @@ const HomeScreen = () => {
           </Button>
         </ButtonGroup>
         <FlatList
-          data={workers}
+          data={shiftList}
           renderItem={({ item }) => <ShiftCard shift={item} />}
         />
       </Layout>
