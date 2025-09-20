@@ -11,11 +11,11 @@ class ShiftStore {
     makeAutoObservable(this);
   }
 
-  setLoading(value: boolean) {
+  private setLoading(value: boolean) {
     this.loading = value;
   }
 
-  setShifts(workers: Shift[]) {
+  private setShifts(workers: Shift[]) {
     this.shiftList = workers;
   }
 

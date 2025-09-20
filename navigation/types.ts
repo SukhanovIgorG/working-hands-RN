@@ -5,26 +5,29 @@ import {
 import { AppRoutes } from './routes';
 
 export type RootStackParamList = {
-  Home: undefined;
-  ShiftDetails: { id: string };
+  [AppRoutes.Home]: undefined;
+  [AppRoutes.ShiftDetails]: { id: string };
 };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'Home'
+  AppRoutes.Home
 >;
 
 type ShiftDetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'ShiftDetails'
+  AppRoutes.ShiftDetails
 >;
 
 type ShiftDetailsScreenProp = NativeStackScreenProps<
   RootStackParamList,
-  'ShiftDetails'
+  AppRoutes.ShiftDetails
 >;
 
-type HomeScreenProp = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenProp = NativeStackScreenProps<
+  RootStackParamList,
+  AppRoutes.Home
+>;
 
 export type NavigationProps = {
   [AppRoutes.Home]: HomeScreenNavigationProp;

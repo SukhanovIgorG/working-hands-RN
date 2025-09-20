@@ -6,7 +6,6 @@ import { observer } from 'mobx-react-lite';
 import { ShiftCard } from '../../components';
 import { useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { NavigationProps } from '../../navigation/types';
 import { AppRoutes } from '../../navigation/routes';
 
 const HomeScreen = () => {

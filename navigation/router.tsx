@@ -3,14 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../screens/Home';
 import ShiftDetails from '../screens/ShiftDetails';
+import { AppRoutes } from './routes';
+import { RootStackParamList } from './types';
 
-const RootStack = createNativeStackNavigator({
+const RootStack = createNativeStackNavigator<RootStackParamList>({
   screens: {
-    Home: {
+    [AppRoutes.Home]: {
       screen: HomeScreen,
       options: { title: 'Главная' },
     },
-    ShiftDetails: {
+    [AppRoutes.ShiftDetails]: {
       screen: ShiftDetails,
       options: { title: 'Детали' },
     },
